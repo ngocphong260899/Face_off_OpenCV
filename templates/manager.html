@@ -1,0 +1,179 @@
+{% extends "index.html "%}
+{% block content %}
+{% load static %}
+    <div class="container-fluid mt--7">
+      <div class="row mt-5">
+        <div class="col-xl-6 mb-5 mb-xl-0">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Quản lý lớp học</h3>
+                </div>
+                <div class="col text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                </div>
+              </div>
+            </div>
+           <form action="/managerclass" method="GET" autocomplete="off">
+            <div class="row">
+             <div class="col-xl-2"></div>
+             <div class="col-xl-6">
+                 <input type="text" id="input-class" class="form-control form-control-alternative" placeholder="KTPM-K14B" name="class" required>
+             </div>
+             <div class="col-xl-2">
+                 <button type="submit" class="btn btn-info" id="btn-add-class">Thêm</button>
+             </div>
+            <div class="col-xl-2"></div>
+            </div>
+           </form>
+            <div class="table-responsive" style="margin-top:20px">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush" id="table_class">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên lớp</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% if list_class %}
+                {% for item in list_class %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <th scope="row">
+                      {{ item.name }}
+                    </th>
+                    <td>
+                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default" onclick="editClass('{{item.name}}',{{item.id}})">Sửa</button>
+                      <button type="button" class="btn btn-danger btn-sm" onclick="deleteClass({{item.id}})">Xóa</button>
+                    </td>
+                  </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 mb-5 mb-xl-0">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Quản lý môn học</h3>
+                </div>
+                <div class="col text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                </div>
+              </div>
+            </div>
+            <form action="/managerclass" method="GET" autocomplete="off">
+            <div class="row">
+             <div class="col-xl-2"></div>
+             <div class="col-xl-6">
+                 <input type="text" id="input-subject" class="form-control form-control-alternative" placeholder="Java" name="subject" required>
+             </div>
+             <div class="col-xl-2">
+                 <button type="submit" class="btn btn-info" id="btn-add-subject">Thêm</button>
+             </div>
+            <div class="col-xl-2"></div>
+            </div>
+            </form>
+            <div class="table-responsive" style="margin-top:20px">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên lớp</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% if list_subject %}
+                    {% for item in list_subject %}
+                      <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th scope="row">
+                          {{ item.name }}
+                        </th>
+                        <td>
+                          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default" onclick="editSubject('{{item.name}}',{{item.id}})">Sửa</button>
+                          <button type="button" class="btn btn-danger btn-sm" onclick="deleteSubject({{item.id}})">Xóa</button>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--modal-->
+
+      <div class="row">
+      <div class="col-md-4">
+          <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modal-title-default">Sửa thông tin</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                         <input type="text" class="form-control" required id="input-edit">
+                         <input type="text" hidden id="input-action">
+                         <input type="text" hidden id="input-id">
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="button-save-edit">Save changes</button>
+                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
+  </div>
+
+
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
+          <div class="col-xl-6">
+            <div class="copyright text-center text-xl-left text-muted">
+              &copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+{% endblock content %}

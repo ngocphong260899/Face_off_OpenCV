@@ -1,0 +1,103 @@
+{% if list_student %}
+<div class="col-lg-6" style="border-right: 1px solid #dde1e9;">
+<div class="row">
+<div class="table-responsive">
+  <div>
+      <table class="table align-items-center">
+          <thead class="thead-light">
+              <tr>
+                  <th scope="col">STT</th>
+                  <th scope="col">
+                     Tên
+                  </th>
+                  <th scope="col">
+                      Mã sinh viên
+                  </th>
+                  <th scope="col">
+                      Status
+                  </th>
+              </tr>
+          </thead>
+          <tbody class="list">
+             {% if list_student %}
+             {% for item in list_student %}
+                 <tr>
+                <td>{{ forloop.counter }}</td>
+                <th scope="row">
+                  {{ item.name }}
+                </th>
+                <td>
+                  {{ item.msv }}
+                </td>
+                <td>
+                    {% if list_roll_up %}
+                        {% for key, value in list_roll_up.items %}
+                           {% if key == item.msv and value == 1 %}
+                             <div class="custom-control custom-checkbox mb-3">
+                              <input class="custom-control-input" id="{{item.msv }}" type="checkbox" checked value="{{item.msv}}" name="list-roll-up">
+                              <label class="custom-control-label" for="{{item.msv}}">Điểm danh</label>
+                             </div>
+                            {% elif key == item.msv and value == 0 %}
+                            <div class="custom-control custom-checkbox mb-3">
+                              <input class="custom-control-input" id="{{item.msv}}" type="checkbox" value="{{item.msv}}" name="list-roll-up">
+                              <label class="custom-control-label" for="{{item.msv}}">Điểm danh</label>
+                            </div>
+                           {% endif %}
+                        {% endfor %}
+                    {% else %}
+                           <label>Chưa điểm danh</label>
+                    {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+   </div>
+  </div>
+     {% if list_roll_up %}
+        <button type="submit" class="btn btn-primary btn-block" id="btn_edit">Sửa</button>
+    {% endif %}
+<script>
+Swal.close();
+$('#btn_edit').click(function(event) {
+$('#uploadForm').attr('action', '/editrollup/');
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Sửa thành công',
+  showConfirmButton: false,
+  timer: 1000
+})
+});
+</script>
+</div>
+<div class="col-lg-6">
+   <div class="row">
+     <div id="preview" class="col-lg-12 img-roll-up">
+      {% if list_dir %}
+      {% for item in list_dir %}
+         <img src="/{{item}}">
+      {% endfor %}
+      {% endif %}
+     </div>
+   </div>
+  </div>
+{% else %}
+<div class="col-lg-6" style="border-right: 1px solid #dde1e9;">
+<div class="row">
+<div class="table-responsive">
+  <div>
+      <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+             <th scope="col" class="text-center" style="font-size:30px">Không có dữ liệu</th>
+            </tr>
+          </thead>
+      </table>
+  </div>
+</div>
+</div>
+</div>
+{% endif %}

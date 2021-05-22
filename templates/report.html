@@ -1,0 +1,99 @@
+{% extends "index.html "%}
+{% block content %}
+{% load static %}
+    <div class="container-fluid mt--7">
+    <form enctype="multipart/form-data" id="uploadForm" method="POST" action="">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-xl-12 order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Thống kê, báo cáo</h3>
+                </div>
+                <div class="col-4 text-right">
+                    <button class="btn btn-sm btn-primary" id="btn_roll_up" type="submit">Điểm danh</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Lớp</label>
+                      <select class="form-control form-control-alternative" name="class" id="class">
+                      {% if list_class%}
+                      {% for item in list_class %}
+                        <option value="{{item.name}}">{{item.name}}</option>
+                      {% endfor %}
+                      {% endif %}
+                      </select>
+                  </div>
+                </div>
+              <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Môn học</label>
+                      <select class="form-control form-control-alternative" name="class" id="subject">
+                      {% if list_subject%}
+                      {% for item in list_subject %}
+                        <option value="{{item.name}}">{{item.name}}</option>
+                      {% endfor %}
+                      {% endif %}
+                      </select>
+                  </div>
+                </div>
+                  <div class="col-lg-2">
+                  <div class="form-group">
+                    <label class="form-control-label">Số buổi đã điểm danh</label>
+                    <button type="button" class="btn btn-lg btn-block btn-primary" id="button_show_absent">{{list_date|length}}</button>
+                  </div>
+                </div>
+                 <div class="col-lg-2">
+                  <div class="form-group">
+                    <label class="form-control-label">Xuất file</label>
+                    <button type="button" class="btn btn-lg btn-block btn-success" id="btnExport">Xuất Exel</button>
+                  </div>
+                </div>
+                </div>
+
+                </div>
+              </div>
+              <div class="row">
+                 <div class="table-responsive">
+                  <table class="table align-items-center table-flush" id="table_report">
+
+                  </table>
+                </div>
+              </div>
+            </div>
+      </div>
+    </form>
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
+          <div class="col-xl-6">
+            <div class="copyright text-center text-xl-left text-muted">
+              &copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+{% endblock content %}

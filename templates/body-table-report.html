@@ -1,0 +1,58 @@
+{% if list_student %}
+<thead class="thead-light">
+  <tr>
+    <th scope="col">STT</th>
+    <th scope="col">Tên sinh viên</th>
+    <th scope="col">Mã sinh viên</th>
+  {% if list_date %}
+  {% for item in list_date %}
+     <th scope="col" class="text-center">{{item|date:'Y-m-d'}}</th>
+  {% endfor %}
+  {% endif %}
+    <th class="text-center">Số buổi nghỉ</th>
+  </tr>
+</thead>
+<tbody>
+
+{% if list_student %}
+{% for item in list_student %}
+<tr>
+<td>{{ forloop.counter }}</td>
+<th scope="row">
+  {{item.name}}
+</th>
+<td>{{item.msv}}</td>
+{% if list_data %}
+ {% for value in list_data %}
+    {% if value.msv == item.msv %}
+        {% if value.status == 1 %}
+            <td class="text-center">x</td>
+        {% else %}
+            <td class="text-center">o</td>
+        {% endif %}
+    {% endif %}
+ {% endfor %}
+{% endif %}
+
+{% if summary%}
+  {% for smr in summary %}
+    {% if smr.msv == item.msv %}
+        {% if smr.absent < 2 %}
+        <td class="text-center"><button type="button" class="btn btn-info btn-sm">{{smr.absent}} </button> </td>
+        {% else %}
+        <td class="text-center"><button type="button" class="btn btn-danger btn-sm">{{smr.absent}} </button> </td>
+        {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+</tr>
+{% endfor %}
+{% endif %}
+</tbody>
+{% else %}
+    <thead class="thead-light">
+        <tr>
+            <th scope="col" class="text-center" style="font-size:30px">Không có dữ liệu</th>
+        </tr>
+    </thead>
+{% endif %}
